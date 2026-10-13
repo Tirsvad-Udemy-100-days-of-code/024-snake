@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c784a5c] |
 
 ---
 
@@ -57,3 +57,4 @@ Go — all Mandatory criteria pass or are not applicable. Assessed on 2026-10-13
 
 [MIL-002]: ../../milestones/mil-002-adopt-the-game.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[c784a5c]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/c784a5c374e14a26369d217eea8bc6b11d2ac532
