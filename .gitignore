@@ -1,0 +1,38 @@
+# Personal tokens: never commit or import this file
+.env
+
+# Virtual environment
+.venv
+venv
+
+# Byte-compiled and cached files
+__pycache__
+*.py[cod]
+*$py.class
+
+# Packaging and build output (build/ also holds the Doxygen HTML)
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+pip-wheel-metadata/
+
+# Test, lint and type-check caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+.codex/agents/
+
+# Local state: the high score file of the game (day 24)
+data.txt
