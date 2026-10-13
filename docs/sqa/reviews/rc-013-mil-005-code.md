@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-13 | Proposed | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [74ee862] |
 
 ---
 
@@ -57,3 +57,4 @@ Go — no Python file changed in this milestone, so every criterion is not appli
 
 [MIL-005]: ../../milestones/mil-005-wiki-and-finish.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[74ee862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/74ee862db19c51af768ea7feeb82f2cac2a0b11d
