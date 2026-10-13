@@ -154,10 +154,18 @@ def test_tail_is_touched_closer_than_10_pixels_which_is_less_than_a_move() -> No
     assert 0 < constants.TAIL_COLLISION_DISTANCE < constants.MOVE_DISTANCE
 
 
-def test_game_over_text_is_written_at_the_centre_inside_the_wall() -> None:
-    x, y = constants.GAME_OVER_POSITION
+def test_game_over_constants_no_longer_exist() -> None:
+    assert not hasattr(constants, "GAME_OVER_TEXT")
+    assert not hasattr(constants, "GAME_OVER_POSITION")
 
-    assert constants.GAME_OVER_TEXT == "GAME OVER"
-    assert (x, y) == (0, 0)
-    assert abs(x) < constants.WALL_LIMIT
-    assert abs(y) < constants.WALL_LIMIT
+
+def test_high_score_label_follows_the_score_label_as_in_the_lecture() -> None:
+    assert constants.HIGH_SCORE_LABEL == "High Score: "
+    assert constants.HIGH_SCORE_LABEL != constants.SCORE_LABEL
+
+
+def test_old_segments_are_parked_outside_the_screen() -> None:
+    x, y = constants.SEGMENT_PARKING_POSITION
+
+    assert abs(x) > HALF_WIDTH
+    assert abs(y) > HALF_HEIGHT

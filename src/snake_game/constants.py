@@ -117,8 +117,14 @@ SCOREBOARD_FONT: Final[tuple[str, int, str]] = ("Arial", 24, "normal")
 ## @brief The head touches the tail when it is closer to a segment than this, in pixels.
 TAIL_COLLISION_DISTANCE: Final[int] = 10
 
-## @brief Text shown when the game is over.
-GAME_OVER_TEXT: Final[str] = "GAME OVER"
+## @brief Text in front of the high score on the scoreboard.
+#
+#  The scoreboard writes `Score: <score> High Score: <high_score>`: the score
+#  label, the score, a space, this label and the high score.
+HIGH_SCORE_LABEL: Final[str] = "High Score: "
 
-## @brief Where the game-over text is written: the centre of the screen.
-GAME_OVER_POSITION: Final[tuple[int, int]] = (0, 0)
+## @brief Where a segment of the old snake is sent when the snake is reset.
+#
+#  The place is far outside the 600 by 600 screen, so the old segments are out
+#  of sight, as the day-24 lecture does it.
+SEGMENT_PARKING_POSITION: Final[tuple[int, int]] = (1000, 1000)
