@@ -19,11 +19,11 @@ This repository continues
 and starts from its finished game; `docs/project-plan.md` tells how the work is
 split into milestones.
 
-> **Status:** in progress. The repository foundation (this README, the
-> configuration, the constants, the Doxygen settings and the continuous
-> integration workflow) is in place; the game itself, continuous play, the high
-> score and the high score file follow in milestones 2 to 4, and the wiki in
-> milestone 5. The sections below describe the finished game.
+> **Status:** in progress. The finished game of day 21 is adopted and runs: the
+> snake moves, eats and grows, the score is shown and the game ends at the wall
+> or at the tail. Continuous play and the high score (milestone 3), the high
+> score file (milestone 4) and the wiki (milestone 5) follow. The sections below
+> describe the game as it is now; they are updated in each milestone.
 
 ## Requirements
 
@@ -88,9 +88,27 @@ With the virtual environment active:
 python -m snake_game
 ```
 
-The game itself is added in milestone 2 (see the status above); this section
-is completed with the controls, the two scores and the high score file in
-milestones 2 to 5.
+It opens a black 600 by 600 window titled "My Snake Game". The snake of three
+squares starts in the middle and moves to the right by itself, 20 pixels every
+0.1 seconds. Its body is light green and its head is dark green with a mouth.
+
+| Key | Effect |
+| --- | --- |
+| Up, Down, Left, Right | Turn the snake |
+
+The snake never turns straight back onto itself: the arrow key opposite to the
+way it is going is ignored.
+
+A small blue circle, the food, appears at a random place. When the head comes
+closer to it than 15 pixels the snake eats it: the food moves to a new random
+place, the snake grows by one segment, and the score at the top of the window
+goes up by 1.
+
+The game is over when the head passes the wall (more than 280 pixels from the
+centre on any side) or touches the tail. The snake stops, `GAME OVER` appears in
+the middle of the window, and a click on the window closes it. You can also close
+the window with its close button at any time. (Milestone 3 replaces this with
+continuous play and a high score.)
 
 ## Run the tests
 
@@ -141,16 +159,18 @@ The HTML is written to `build/doxygen/index.html`. A warning fails the build.
 ├── docs/                      business case, plan, milestones, reviews
 ├── src/snake_game/            the game
 │   ├── __init__.py
-│   └── constants.py           every constant of the game
-├── tests/                     pytest tests
+│   ├── __main__.py            starts the game: python -m snake_game
+│   ├── constants.py           every constant of the game
+│   ├── food.py                the Food class (inherits from Turtle)
+│   ├── main.py                screen set-up and the main flow
+│   ├── scoreboard.py          the Scoreboard class (inherits from Turtle)
+│   └── snake.py               the Snake class
+├── tests/                     pytest tests (fakes.py holds the fake turtle and screen)
 ├── Doxyfile                   source documentation settings
 ├── LICENSE
 ├── pyproject.toml             project configuration
 └── README.md
 ```
-
-The remaining modules (`snake.py`, `food.py`, `scoreboard.py`, `main.py` and
-`__main__.py`) are added in milestone 2.
 
 ## License
 
