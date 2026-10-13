@@ -128,3 +128,15 @@ HIGH_SCORE_LABEL: Final[str] = "High Score: "
 #  The place is far outside the 600 by 600 screen, so the old segments are out
 #  of sight, as the day-24 lecture does it.
 SEGMENT_PARKING_POSITION: Final[tuple[int, int]] = (1000, 1000)
+
+## @brief Name of the text file that keeps the high score between games.
+#
+#  A relative path: the file lies in the working directory the game is started
+#  from. The file is not tracked by git.
+HIGH_SCORE_FILE: Final[str] = "data.txt"
+
+## @brief Text encoding used to read and write the high score file.
+HIGH_SCORE_FILE_ENCODING: Final[str] = "utf-8"
+
+## @brief The high score of a new game, and of a file that cannot be read.
+DEFAULT_HIGH_SCORE: Final[int] = 0
