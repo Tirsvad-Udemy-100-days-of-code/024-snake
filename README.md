@@ -14,6 +14,11 @@ The game has no runtime dependencies. The code keeps the names of the lectures
 `increase_score`, `update_scoreboard`, `high_score`) so that you can compare it
 with your own solution.
 
+![The game at a score of 5 with a high score of 12: a light green snake with a dark green head and a mouth, blue food and the scores at the top](docs/images/snake-score-5.png)
+
+*The running game at a score of 5 with a high score of 12: a light green body, a dark
+green head with a mouth, the blue food and the white scoreboard.*
+
 This repository continues
 [021-snake-game](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/021-snake-game)
 and starts from its finished game; `docs/project-plan.md` tells how the work is
