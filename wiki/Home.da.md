@@ -8,6 +8,10 @@
 
 Det klassiske Snake-spil, bygget med Pythons `turtle`-modul. Det er opgaven fra dag 24 i Udemys *100 Days of Code: The Complete Python Pro Bootcamp*, som handler om det lokale filsystem og om at læse og skrive filer. En slange bevæger sig af sig selv hen over en sort skærm på 600 gange 600 og styres med piletasterne; den spiser mad og vokser, og tavlen øverst viser scoren og highscoren. Spillet slutter ikke: når hovedet passerer væggen eller rører sin egen hale, starter slangen og scoren forfra, og den bedste score gemmes i filen `data.txt`, så den stadig er der, næste gang du spiller.
 
+![Spillet ved en score på 5 og en highscore på 12: en lysegrøn slange med et mørkegrønt hoved og en mund, blå mad og tallene øverst](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/raw/branch/main/docs/images/snake-score-5.png)
+
+*Det kørende spil ved en score på 5 og en highscore på 12: en lysegrøn krop, et mørkegrønt hoved med en mund, den blå mad og den hvide tavle.*
+
 ## Styring
 
 | Tast | Virkning |
