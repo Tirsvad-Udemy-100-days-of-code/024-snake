@@ -19,11 +19,12 @@ This repository continues
 and starts from its finished game; `docs/project-plan.md` tells how the work is
 split into milestones.
 
-> **Status:** in progress. The finished game of day 21 is adopted and runs: the
-> snake moves, eats and grows, the score is shown and the game ends at the wall
-> or at the tail. Continuous play and the high score (milestone 3), the high
-> score file (milestone 4) and the wiki (milestone 5) follow. The sections below
-> describe the game as it is now; they are updated in each milestone.
+> **Status:** in progress. The game of day 21 is adopted and now follows the
+> day-24 lectures on continuous play: the scoreboard shows the score and the high
+> score, and a collision resets the snake and the score instead of ending the
+> game. The high score is kept in memory only; the high score file (milestone 4)
+> and the wiki (milestone 5) follow. The sections below describe the game as it
+> is now; they are updated in each milestone.
 
 ## Requirements
 
@@ -104,11 +105,16 @@ closer to it than 15 pixels the snake eats it: the food moves to a new random
 place, the snake grows by one segment, and the score at the top of the window
 goes up by 1.
 
-The game is over when the head passes the wall (more than 280 pixels from the
-centre on any side) or touches the tail. The snake stops, `GAME OVER` appears in
-the middle of the window, and a click on the window closes it. You can also close
-the window with its close button at any time. (Milestone 3 replaces this with
-continuous play and a high score.)
+The scoreboard at the top of the window reads `Score: 0 High Score: 0`. The score
+counts the foods eaten since the last reset; the high score is the best score so
+far.
+
+The game does not end. When the head passes the wall (more than 280 pixels from
+the centre on any side) or touches the tail, the old snake is sent off the
+screen, a new snake of three segments appears in the middle, the score goes back
+to 0, and the high score is raised if the score was higher. Close the window with
+its close button when you have had enough. The high score is lost when the game
+is closed until milestone 4 stores it in a file.
 
 ## Run the tests
 

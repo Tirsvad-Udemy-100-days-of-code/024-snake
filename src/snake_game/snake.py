@@ -3,9 +3,10 @@
 
 The class follows the lectures "Create a Snake Class & Move to OOP", "Animating
 the Snake Segments on Screen" and "Controlling the Snake with Keypresses", and
-the day-21 steps in which the snake grows and the game ends. It keeps the lectures'
+the day-21 steps in which the snake grows, and the day-24 step in which it is reset
+after a collision. It keeps the lectures'
 names: `Snake`, `segments`, `create_snake`, `add_segment`, `extend`, `move`, `head`,
-`up`, `down`, `left` and `right`. The only differences are that the snake gets
+`reset`, `up`, `down`, `left` and `right`. The only differences are that the snake gets
 the function that makes a segment as a parameter, so that a test can pass a fake
 and needs no window, and how a reversal is refused (see Snake).
 """
@@ -20,6 +21,7 @@ from snake_game.constants import (
     LEFT,
     MOVE_DISTANCE,
     RIGHT,
+    SEGMENT_PARKING_POSITION,
     SEGMENT_SHAPE,
     STARTING_POSITIONS,
     TAIL_COLLISION_DISTANCE,
@@ -202,6 +204,20 @@ class Snake:
             ahead = self.segments[index - 1]
             self.segments[index].goto(ahead.xcor(), ahead.ycor())
         self.head.forward(MOVE_DISTANCE)
+        self._direction_of_travel = self.head.heading()
+
+    def reset(self) -> None:
+        """! @brief Start again with a new snake of three segments.
+
+        Every old segment is sent far outside the screen, so it can no longer be
+        seen, the list is emptied, and the snake is created again at the starting
+        positions. The new head is the first new segment, and it points right.
+        """
+        for segment in self.segments:
+            segment.goto(*SEGMENT_PARKING_POSITION)
+        self.segments.clear()
+        self.create_snake()
+        self.head = self.segments[0]
         self._direction_of_travel = self.head.heading()
 
     def hits_wall(self) -> bool:
