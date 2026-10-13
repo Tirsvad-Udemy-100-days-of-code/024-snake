@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-002 (Go) | [e004c34] |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added S03's concern for a screenshot in the README and on the wiki (objective 13), and the README and the wiki as a communication channel for it; reviewed in RC-015 (Go) | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added S03's concern for a screenshot in the README and on the wiki (objective 13), and the README and the wiki as a communication channel for it; reviewed in RC-015 (Go) | [988ebba] |
 
 ---
 
@@ -102,3 +102,4 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 [MIL-006]: ./milestones/mil-006-screenshot.md
 [021-snake-game]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/021-snake-game
 [e004c34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/e004c34565839b38dc1e06c8a05baaa66ce9eb1d
+[988ebba]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/988ebba060c1ec69728a7fa36b24bc70737096d8

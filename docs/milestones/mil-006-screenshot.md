@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-017 (Go) | pending |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-017 (Go) | [988ebba] |
 
 ---
 
@@ -76,3 +76,4 @@ This gate decides whether the README and the wiki show the finished game in a re
 [BC-001]: ../business-case.md
 [PP-001]: ../project-plan.md
 [MIL-005]: ./mil-005-wiki-and-finish.md
+[988ebba]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/988ebba060c1ec69728a7fa36b24bc70737096d8
