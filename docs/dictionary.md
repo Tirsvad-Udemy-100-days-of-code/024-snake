@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-003 (Go) | [e004c34] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-003 (Go) | [e004c34] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the term screenshot; reviewed in RC-016 (Go) | pending |
 
 ---
 
@@ -51,6 +52,7 @@ Maps each Product Owner (PO) term to its professional information technology (IT
 | read | en | `open` in mode `r`, then `read` | The game gets the high score from the data file as text and converts it to a whole number. | BC, PP, MIL | PY |
 | write | en | `open` in mode `w`, then `write` | The game replaces the content of the data file with the new high score as text. | BC, PP, MIL | PY |
 | inheritance | en | subclass of `Turtle` | A class takes over the attributes and methods of another class; `Food` and `Scoreboard` take over those of `Turtle`. | BC, SA, MIL | PY |
+| screenshot | en | `docs/images/snake-score-5.png` | The picture of the running game window that the README and the wiki show. | BC, SA, PP, MIL | none |
 
 ## Rules
 

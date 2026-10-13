@@ -4,24 +4,25 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [DICT-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] |
+| CrossReference | [BC-001], [SA-001], [DICT-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] |
 | Language | en |
 | Domain | it |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version; accepted by S01 (Product Owner) in chat on 2026-10-13 | [e004c34] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version; accepted by S01 (Product Owner) in chat on 2026-10-13 | [e004c34] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | S01 | Added MIL-006 (the screenshot): its schedule, scope coverage, dependency, a risk and open issues; accepted by S01 (Product Owner) in chat on 2026-10-13 | pending |
 
 ---
 
 ## Purpose
 
-This plan schedules the five milestones that deliver the Snake Game (Day 24) repository of [BC-001]. The repository starts from the finished `main` of [021-snake-game], which holds the snake game of days 20 and 21 with tests and documentation. The milestones therefore set up the repository, adopt that base, add continuous play and the high score of the day-24 lectures, store the high score in `data.txt`, and finish the repository with the README check and a wiki in three languages. Each milestone is one gateway document, one branch and one pull request, so that every step is kept track of and reviewed before the next one starts.
+This plan schedules the six milestones that deliver the Snake Game (Day 24) repository of [BC-001]. The repository starts from the finished `main` of [021-snake-game], which holds the snake game of days 20 and 21 with tests and documentation. The milestones therefore set up the repository, adopt that base, add continuous play and the high score of the day-24 lectures, store the high score in `data.txt`, and finish the repository with the README check and a wiki in three languages; a sixth milestone, added on 2026-10-13, adds a screenshot of the game. Each milestone is one gateway document, one branch and one pull request, so that every step is kept track of and reviewed before the next one starts.
 
 ## Planning Assumptions
 
-- The phase starts 2026-10-14 and ends by 2026-10-25, which leaves two days of buffer after [MIL-005]. All dates are proposed and need the Product Owner's confirmation (see Open Issues).
+- The phase starts 2026-10-14 and ends by 2026-10-25, which leaves two days of buffer after [MIL-005]. All dates are proposed and need the Product Owner's confirmation (see Open Issues). [MIL-006] was added after [MIL-005] was merged; it uses the two buffer days, so the end date does not move and no buffer remains.
 - Phase length: two days per milestone, sized for the spare time of S01, who owns every phase ([SA-001]).
 - The starting point is the finished `main` of [021-snake-game], which S01 pointed to in chat on 2026-10-13. The base is copied file by file, so each adopted file is a task, and every difference from the base is listed in the pull request.
 - One branch per milestone, named after it (`mil-001-project-foundation` and so on), and one pull request that closes the issues of that milestone with one `Closes #N` line each. The planning documents themselves are delivered on the branch `plan-baseline`.
@@ -38,6 +39,7 @@ This plan schedules the five milestones that deliver the Snake Game (Day 24) rep
 | Continuous play and high score | [MIL-003] | 2026-10-18 to 2026-10-19 | 2026-10-19 | S01 | None (see Open Issues) | `Scoreboard.high_score` and `reset`, `Snake.reset`, play without game over, with tests | |
 | High score file | [MIL-004] | 2026-10-20 to 2026-10-21 | 2026-10-21 | S01 | None (see Open Issues) | High score read from and written to `data.txt` with `with`, robust against a missing or damaged file, with tests | |
 | Wiki and finish | [MIL-005] | 2026-10-22 to 2026-10-23 | 2026-10-23 | S01 | None (see Open Issues) | Wiki in English, Danish and Bahasa Melayu; README checked against the finished game; end-to-end verification | |
+| Screenshot | [MIL-006] | 2026-10-24 to 2026-10-25 | 2026-10-25 | S01 | None (see Open Issues) | A real screenshot of the running game at a score of 5, shown in the README and on the three wiki pages | |
 
 ```plantuml
 @startgantt
@@ -52,7 +54,8 @@ Project starts 2026-10-14
 [MIL-003 Go/No-Go] happens 2026-10-19
 [MIL-004 Go/No-Go] happens 2026-10-21
 [MIL-005 Go/No-Go] happens 2026-10-23
-[Buffer] starts 2026-10-24 and ends 2026-10-25
+[MIL-006 Screenshot] starts 2026-10-24 and ends 2026-10-25
+[MIL-006 Go/No-Go] happens 2026-10-25
 @endgantt
 ```
 
@@ -70,14 +73,15 @@ Project starts 2026-10-14
 | `pyproject.toml`, Python `.gitignore`, `Doxyfile`, README, continuous integration workflow | [MIL-001], README updated in [MIL-002] to [MIL-004] and finished in [MIL-005] |
 | Repository description and topics | [MIL-001] (task 7), checked again in [MIL-005] |
 | Wiki in English, Danish and Bahasa Melayu | [MIL-005] |
+| A real screenshot of the game in the README and on the wiki (objective 13) | [MIL-006] |
 
 ## Dependencies
 
 ```
-MIL-001 → MIL-002 → MIL-003 → MIL-004 → MIL-005
+MIL-001 → MIL-002 → MIL-003 → MIL-004 → MIL-005 → MIL-006
 ```
 
-A No-Go on a gateway returns it to S01 for rework and moves every later date by the same number of days; the two buffer days after [MIL-005] absorb a slip before the end date moves.
+A No-Go on a gateway returns it to S01 for rework and moves every later date by the same number of days; after [MIL-006] no buffer day remains, so a No-Go on it moves the end date.
 
 ## Plan Risks
 
@@ -89,6 +93,7 @@ A No-Go on a gateway returns it to S01 for rework and moves every later date by 
 | Lecture details are only available as the summaries in the request | The game differs from the video | S01 compares the finished game with the video at the [MIL-003] and [MIL-004] Go/No-Go |
 | The sync matches issues by title, so a title used twice overwrites an issue | A task disappears from the board | Every task title is unique across all milestones; check before each `--apply` |
 | The base is a copy of another repository | A later fix reaches only one of them | Out of scope by decision (see [BC-001]); each pull request lists the differences from the base |
+| The screenshot is a capture of a real window, which needs a display | It cannot be repeated in CI or on another machine | It is taken once on S01's machine with a one-off script outside the repository and committed as a file; a capture tool is out of scope |
 | The wiki publish workflow needs a secret of the organization | The wiki stays empty | Reported to S01, never worked around; the pages are files in `wiki/` and are not lost |
 
 ## Open Issues
@@ -107,7 +112,7 @@ A No-Go on a gateway returns it to S01 for rework and moves every later date by 
 - **Display-free tests:** `Scoreboard` inherits from `Turtle`, so its tests install a fake `turtle` module, as in [021-snake-game].
 - **No user story or use case:** the tasks are written as build and check steps, so they are plain technical tasks. If the player's goal should be modelled, add a Use Case Diagram, a user story and a use case and reference them from the task rows.
 - **Governance and traceability matrix:** `GOV` and `TM` do not exist yet in this project. Decide whether to create them; the plan proceeds without them and records each review as an `RC-*`. The Domain Dictionary [DICT-001] was added on 2026-10-13 so that criterion 5 of `QC-LANG-001` can be checked.
-- **Screenshot:** not part of this plan; a screenshot needs S01's display. It can be added to the README and the wiki later.
+- **Screenshot (added 2026-10-13):** S01 asked for a screenshot of the game in the README and on the wiki. [MIL-006] takes it with a one-off script outside the repository: the real game window at a score of 5, with a high score of 12 on the scoreboard that comes from a temporary `data.txt` (S01's own `data.txt` is not used). The score of 5 and the high score of 12 are assumptions that S01 confirms by accepting this plan. The wiki pages refer to the file on `main`, so the pages show it as soon as the merge is published.
 - **Diagram check:** the Gantt chart above was not rendered because no PlantUML server is configured (`PLANTUML_URL`); render it before the review.
 - **Sync:** `sync-project.sh --apply` is run with `GITEA_TOKEN` from the personal `.env` after the plan is accepted, as in [021-snake-game]; the sync matches issues by title.
 
@@ -121,6 +126,7 @@ A No-Go on a gateway returns it to S01 for rework and moves every later date by 
 [MIL-003]: ./milestones/mil-003-continuous-play-and-high-score.md
 [MIL-004]: ./milestones/mil-004-high-score-file.md
 [MIL-005]: ./milestones/mil-005-wiki-and-finish.md
+[MIL-006]: ./milestones/mil-006-screenshot.md
 [020-snake-game]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game
 [021-snake-game]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/021-snake-game
 [e004c34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/e004c34565839b38dc1e06c8a05baaa66ce9eb1d

@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-002 (Go) | [e004c34] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-002 (Go) | [e004c34] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added S03's concern for a screenshot in the README and on the wiki (objective 13), and the README and the wiki as a communication channel for it; reviewed in RC-015 (Go) | pending |
 
 ---
 
@@ -48,6 +49,7 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 | S02 | The code is readable and keeps the assignment's names (`Snake`, `Food`, `Scoreboard`, `reset`, `high_score`, `update_scoreboard`, `increase_score`, `create_snake`, `add_segment`, `extend`, `up`, `down`, `left`, `right`, `segments`, `head`, `game_is_on`) | Usability |
 | S02 | The README tells how to create the `.venv`, run the game and run the tests on their operating system | Usability |
 | S03 | The repository page says what the project is, with description, topics, README and a wiki in English, Danish and Bahasa Melayu | Usability |
+| S03 | The README and the wiki show what the game looks like, in a real screenshot of the running game | Usability |
 | S03 | Nothing must be installed to run the game apart from Python itself | Implementation (constraint) |
 
 ## Communication Requirements
@@ -58,6 +60,7 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 | S02 | README in the repository | Once, updated when the game changes | Set-up, run and test instructions per operating system | [MIL-001], completed in [MIL-005] |
 | S03 | Repository description, topics and README | Once, updated when the game changes | Description, topics and README overview | [MIL-001], checked in [MIL-005] |
 | S03 | Wiki of the repository | Once | Pages `Home`, `Home.da` and `Home.ms` with a short description, the controls and how to run it | [MIL-005] |
+| S03 | README and wiki | Once, updated when the look changes | The screenshot of the running game | [MIL-006] |
 
 ## Conflicting Interests and Mitigations
 
@@ -80,6 +83,7 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 | S02 | Readable code with the assignment's names | [BC-001] objective 7 |
 | S02 | README with run and test instructions | [BC-001] objectives 8 and 10 |
 | S03 | Description, topics, README and wiki on the repository page | [BC-001] objective 12 |
+| S03 | A real screenshot of the game in the README and on the wiki | [BC-001] objective 13 |
 | S03 | No runtime dependencies | [BC-001] objective 8 |
 
 ## Sign-Off
@@ -95,5 +99,6 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 [PP-001]: ./project-plan.md
 [MIL-001]: ./milestones/mil-001-project-foundation.md
 [MIL-005]: ./milestones/mil-005-wiki-and-finish.md
+[MIL-006]: ./milestones/mil-006-screenshot.md
 [021-snake-game]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/021-snake-game
 [e004c34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/e004c34565839b38dc1e06c8a05baaa66ce9eb1d
