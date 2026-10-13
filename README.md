@@ -19,10 +19,10 @@ This repository continues
 and starts from its finished game; `docs/project-plan.md` tells how the work is
 split into milestones.
 
-> **Status:** in progress. The game of day 21 is adopted, follows the day-24
-> lectures on continuous play and the high score, and now keeps the high score in
-> the file `data.txt`. The wiki in three languages (milestone 5) follows. The
-> sections below describe the game as it is now.
+> **Status:** finished. The game of day 21 is adopted and follows the day-24
+> lectures: continuous play, a high score next to the score, and the high score
+> kept in the file `data.txt`. A short description of the game in English, Danish
+> and Bahasa Melayu is on the wiki of the repository (the pages are in `wiki/`).
 
 ## Requirements
 
@@ -182,6 +182,7 @@ The HTML is written to `build/doxygen/index.html`. A warning fails the build.
 │   └── snake.py               the Snake class
 ├── tests/                     pytest tests (fakes.py holds the fake turtle and screen;
 │                              conftest.py runs every test in a temporary folder)
+├── wiki/                      wiki pages in English, Danish and Bahasa Melayu
 ├── Doxyfile                   source documentation settings
 ├── LICENSE
 ├── pyproject.toml             project configuration
