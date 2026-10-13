@@ -8,6 +8,10 @@
 
 Permainan Ular (Snake) klasik, dibina dengan modul `turtle` Python. Ia ialah tugasan hari ke-24 dalam *100 Days of Code: The Complete Python Pro Bootcamp* di Udemy, yang mengajar sistem fail setempat serta cara membaca dan menulis fail. Seekor ular bergerak sendiri merentasi skrin hitam 600 kali 600 dan dikawal dengan kekunci anak panah; ia makan makanan dan membesar, dan papan skor di bahagian atas memaparkan skor serta skor tertinggi. Permainan tidak tamat: apabila kepala melepasi dinding atau menyentuh ekornya sendiri, ular dan skor bermula semula, dan skor terbaik disimpan dalam fail `data.txt`, jadi ia masih ada apabila anda bermain lagi.
 
+![Permainan pada skor 5 dengan skor tertinggi 12: seekor ular hijau muda dengan kepala hijau tua dan mulut, makanan biru dan skor di bahagian atas](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/raw/branch/main/docs/images/snake-score-5.png)
+
+*Permainan yang sedang berjalan pada skor 5 dengan skor tertinggi 12: badan hijau muda, kepala hijau tua dengan mulut, makanan biru dan papan skor putih.*
+
 ## Kawalan
 
 | Kekunci | Kesan |
