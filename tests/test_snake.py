@@ -407,3 +407,61 @@ def test_a_snake_of_four_segments_cannot_touch_its_tail_in_a_small_square() -> N
         snake.move()
 
     assert not snake.hits_tail()
+
+
+def test_reset_sends_every_old_segment_off_the_screen() -> None:
+    snake, created = make_snake()
+    snake.extend()
+    old = list(created)
+
+    snake.reset()
+
+    assert len(old) == len(constants.STARTING_POSITIONS) + 1
+    assert all(
+        segment.position() == constants.SEGMENT_PARKING_POSITION for segment in old
+    )
+
+
+def test_reset_makes_the_snake_again_at_the_starting_positions() -> None:
+    snake, created = make_snake()
+    snake.extend()
+    snake.extend()
+    old_count = len(created)
+
+    snake.reset()
+
+    assert len(snake.segments) == len(constants.STARTING_POSITIONS)
+    assert positions(snake.segments) == [
+        (float(x), float(y)) for x, y in constants.STARTING_POSITIONS
+    ]
+    assert snake.segments == created[old_count:]
+
+
+def test_reset_makes_the_first_new_segment_the_head() -> None:
+    snake, created = make_snake()
+    old_head = snake.head
+
+    snake.reset()
+
+    new_head = created[len(constants.STARTING_POSITIONS)]
+    assert snake.head is snake.segments[0] is new_head
+    assert snake.head is not old_head
+    assert ("shape", (constants.HEAD_SHAPE,)) in new_head.calls
+
+
+def test_reset_snake_moves_right_from_the_starting_positions() -> None:
+    snake, _ = make_snake_moving(constants.UP)
+
+    snake.reset()
+    snake.move()
+
+    assert snake.head.position() == (constants.MOVE_DISTANCE, 0)
+
+
+def test_reset_forgets_the_direction_of_the_last_move() -> None:
+    snake, _ = make_snake_moving(constants.DOWN)
+
+    snake.reset()
+    snake.up()  # allowed again: the new snake moves right, not down
+
+    assert snake.head.heading() == constants.UP
