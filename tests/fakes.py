@@ -286,8 +286,13 @@ def make_food(monkeypatch: pytest.MonkeyPatch) -> Any:
     return module.Food()
 
 
-def make_scoreboard(monkeypatch: pytest.MonkeyPatch) -> Any:
+def make_scoreboard(
+    monkeypatch: pytest.MonkeyPatch, path: str | Path | None = None
+) -> Any:
     """Make a real `Scoreboard` whose base class is the fake `Turtle`.
+
+    When `path` is given it is the high score file; otherwise the default
+    `data.txt` is used, which `conftest.py` has moved into a temporary directory.
 
     The result is typed `Any` because it has the methods of `Scoreboard`
     (`increase_score`) and the recording methods of the fake base class (`calls`)
@@ -295,7 +300,9 @@ def make_scoreboard(monkeypatch: pytest.MonkeyPatch) -> Any:
     """
     install_fake_turtle(monkeypatch)
     module = importlib.import_module("snake_game.scoreboard")
-    return module.Scoreboard()
+    if path is None:
+        return module.Scoreboard()
+    return module.Scoreboard(str(path))
 
 
 def imports_turtle_or_tkinter(module_name: str) -> bool:

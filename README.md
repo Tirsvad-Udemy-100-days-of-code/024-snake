@@ -19,12 +19,10 @@ This repository continues
 and starts from its finished game; `docs/project-plan.md` tells how the work is
 split into milestones.
 
-> **Status:** in progress. The game of day 21 is adopted and now follows the
-> day-24 lectures on continuous play: the scoreboard shows the score and the high
-> score, and a collision resets the snake and the score instead of ending the
-> game. The high score is kept in memory only; the high score file (milestone 4)
-> and the wiki (milestone 5) follow. The sections below describe the game as it
-> is now; they are updated in each milestone.
+> **Status:** in progress. The game of day 21 is adopted, follows the day-24
+> lectures on continuous play and the high score, and now keeps the high score in
+> the file `data.txt`. The wiki in three languages (milestone 5) follows. The
+> sections below describe the game as it is now.
 
 ## Requirements
 
@@ -113,8 +111,18 @@ The game does not end. When the head passes the wall (more than 280 pixels from
 the centre on any side) or touches the tail, the old snake is sent off the
 screen, a new snake of three segments appears in the middle, the score goes back
 to 0, and the high score is raised if the score was higher. Close the window with
-its close button when you have had enough. The high score is lost when the game
-is closed until milestone 4 stores it in a file.
+its close button when you have had enough.
+
+### The high score file
+
+The high score is kept as text in the file `data.txt`, in the folder you start
+the game from (`python -m snake_game`). The game reads it when it starts and
+writes it again each time a new high score is reached, so the high score is
+still there the next time you play. The file is created holding `0` the first
+time, and a file that is empty or does not hold a whole number is read as `0`.
+To start from zero again, close the game and delete `data.txt`. The file is
+your own state and is ignored by git. Start the game from another folder and it
+uses the `data.txt` of that folder.
 
 ## Run the tests
 
@@ -168,10 +176,12 @@ The HTML is written to `build/doxygen/index.html`. A warning fails the build.
 │   ├── __main__.py            starts the game: python -m snake_game
 │   ├── constants.py           every constant of the game
 │   ├── food.py                the Food class (inherits from Turtle)
+│   ├── high_score_file.py     read_high_score and write_high_score (data.txt)
 │   ├── main.py                screen set-up and the main flow
 │   ├── scoreboard.py          the Scoreboard class (inherits from Turtle)
 │   └── snake.py               the Snake class
-├── tests/                     pytest tests (fakes.py holds the fake turtle and screen)
+├── tests/                     pytest tests (fakes.py holds the fake turtle and screen;
+│                              conftest.py runs every test in a temporary folder)
 ├── Doxyfile                   source documentation settings
 ├── LICENSE
 ├── pyproject.toml             project configuration

@@ -1,5 +1,7 @@
 """Tests of the main flow, with fakes instead of a real screen."""
 
+from pathlib import Path
+
 import pytest
 
 from fakes import (
@@ -129,6 +131,16 @@ def test_main_sets_up_the_screen_turns_off_drawing_and_binds_the_keys(
     ]
     assert ("tracer", (0,)) in screens[0].calls
     assert sorted(screens[0].bindings) == sorted(ARROW_KEYS)
+
+
+def test_main_creates_data_txt_in_the_working_directory_holding_0(
+    monkeypatch: pytest.MonkeyPatch, sleeps: list[float], tmp_path: Path
+) -> None:
+    install_fake_turtle(monkeypatch)
+
+    main()
+
+    assert (tmp_path / constants.HIGH_SCORE_FILE).read_text(encoding="utf-8") == "0"
 
 
 def test_register_head_shape_builds_two_components_from_the_constants(

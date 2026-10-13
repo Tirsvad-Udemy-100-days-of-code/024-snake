@@ -164,6 +164,15 @@ def test_high_score_label_follows_the_score_label_as_in_the_lecture() -> None:
     assert constants.HIGH_SCORE_LABEL != constants.SCORE_LABEL
 
 
+def test_high_score_is_kept_in_the_text_file_data_txt_as_utf_8() -> None:
+    assert constants.HIGH_SCORE_FILE == "data.txt"
+    assert constants.HIGH_SCORE_FILE_ENCODING == "utf-8"
+
+
+def test_the_default_high_score_is_0() -> None:
+    assert constants.DEFAULT_HIGH_SCORE == 0
+
+
 def test_old_segments_are_parked_outside_the_screen() -> None:
     x, y = constants.SEGMENT_PARKING_POSITION
 

@@ -2,6 +2,7 @@
 
 import importlib
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -127,6 +128,85 @@ def test_the_score_text_shows_both_scores_while_playing(
     scoreboard.increase_score()
 
     assert scoreboard.calls[-1][1][0] == "Score: 1 High Score: 2"
+
+
+def test_scoreboard_shows_the_stored_high_score_at_start(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    path = tmp_path / "scores.txt"
+    path.write_text("12", encoding="utf-8")
+
+    scoreboard = make_scoreboard(monkeypatch, path)
+
+    assert scoreboard.high_score == 12
+    assert scoreboard.calls[-1][1][0] == "Score: 0 High Score: 12"
+
+
+def test_a_new_high_score_is_written_to_the_file_on_reset(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    path = tmp_path / "scores.txt"
+    path.write_text("1", encoding="utf-8")
+    scoreboard = make_scoreboard(monkeypatch, path)
+    for _ in range(2):
+        scoreboard.increase_score()
+
+    scoreboard.reset()
+
+    assert path.read_text(encoding="utf-8") == "2"
+
+
+def test_a_lower_score_does_not_write_the_file(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    path = tmp_path / "scores.txt"
+    path.write_text("5", encoding="utf-8")
+    scoreboard = make_scoreboard(monkeypatch, path)
+    scoreboard.increase_score()
+    path.write_text("sentinel", encoding="utf-8")
+
+    scoreboard.reset()
+
+    assert path.read_text(encoding="utf-8") == "sentinel"
+    assert scoreboard.high_score == 5
+
+
+def test_an_equal_score_does_not_write_the_file(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    path = tmp_path / "scores.txt"
+    path.write_text("2", encoding="utf-8")
+    scoreboard = make_scoreboard(monkeypatch, path)
+    scoreboard.increase_score()
+    scoreboard.increase_score()
+    path.write_text("sentinel", encoding="utf-8")
+
+    scoreboard.reset()
+
+    assert path.read_text(encoding="utf-8") == "sentinel"
+
+
+def test_a_missing_file_shows_high_score_0_and_is_created(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    path = tmp_path / "scores.txt"
+
+    scoreboard = make_scoreboard(monkeypatch, path)
+
+    assert scoreboard.calls[-1] == START_TEXT
+    assert path.read_text(encoding="utf-8") == "0"
+
+
+def test_a_damaged_file_shows_high_score_0(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    path = tmp_path / "scores.txt"
+    path.write_text("not a number", encoding="utf-8")
+
+    scoreboard = make_scoreboard(monkeypatch, path)
+
+    assert scoreboard.high_score == 0
+    assert scoreboard.calls[-1] == START_TEXT
 
 
 def test_scoreboard_has_no_game_over_any_more(
