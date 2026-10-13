@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-001 (Go) | [e004c34] |
+| 2026-10-13 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version, reviewed in RC-001 (Go) | [e004c34] |
+| 2026-10-13 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added objective 13 (a screenshot of the running game in the README and on the wiki), scope, success criterion 14, two risks, an assumption and the cost; reviewed in RC-014 (Go) | [988ebba] |
 
 ---
 
@@ -56,6 +57,7 @@ A finished, reproducible repository shows the path from the day-24 lectures to d
 | 10 | Document the project: Doxygen comments in the source with a `Doxyfile`, and a README with set-up instructions for Windows PowerShell, Linux Debian and macOS |
 | 11 | Keep every step traceable: one branch and one pull request per milestone, each pull request closing the issues it completes |
 | 12 | Publish the repository with a description and topics, and a wiki in English, Danish and Bahasa Melayu |
+| 13 | Show the game in a screenshot: a real capture of the running game window at a score of 5 with a high score on the scoreboard, kept in the repository and shown in the README and on the wiki of the repository |
 
 ## Scope
 
@@ -67,6 +69,7 @@ A finished, reproducible repository shows the path from the day-24 lectures to d
 - `pyproject.toml`, Python `.gitignore`, `Doxyfile`, `README.md` following the Product Owner's template, a continuous integration (CI) workflow.
 - Repository description and topics on the git host.
 - A wiki in English, Danish and Bahasa Melayu, in the form of the wiki of `TirSystem/github-action`.
+- A screenshot of the running game at a score of 5, kept in `docs/images/`, shown in the README and on the three wiki pages.
 
 ### Out of Scope
 
@@ -75,6 +78,7 @@ A finished, reproducible repository shows the path from the day-24 lectures to d
 - Anything the lectures do not cover: sound, a menu, a list of players, levels, configurable speed or window size.
 - Keeping this repository and [021-snake-game] in step after today.
 - Packaging for or publishing to the Python Package Index (PyPI), and runtime dependencies of any kind.
+- A tool in the repository that takes the screenshot: the screenshot is taken once with a one-off script outside the repository, and a later change of the look needs a new screenshot by hand.
 - Using or testing the tokens in `.env`; the file is for personal use only and is never imported by the project.
 
 ## Expected Benefits
@@ -85,6 +89,7 @@ A finished, reproducible repository shows the path from the day-24 lectures to d
 - A test suite that runs in continuous integration without a display and without touching a real high score file.
 - Generated source documentation.
 - A repository page with description, topics, README and a three-language wiki.
+- A screenshot of the running game in the README and on the wiki, so that a visitor sees what it looks like before cloning it.
 
 ### Intangible Benefits
 
@@ -113,6 +118,7 @@ The project supports the participant's goal of finishing the bootcamp with repos
 | 11 | Steps are traceable | 5 of 5 milestones merged by pull request, each description with one `Closes #N` line per completed issue | Pull request list and issue states |
 | 12 | The repository page is complete | Non-empty description, at least 5 topics, and the wiki pages `Home`, `Home.da` and `Home.ms` | Git host |
 | 13 | The base is adopted without hidden change | Every difference between the adopted files and [021-snake-game] is listed in the pull request that introduces it | Pull request descriptions |
+| 14 | The game is shown in a real screenshot | `docs/images/snake-score-5.png` is a capture of the window of the running game while its scoreboard reads `Score: 5` followed by a high score; the README and the wiki pages `Home`, `Home.da` and `Home.ms` show it, and its address on `main` answers HTTP 200 with an image | The file, the README and the wiki, checked against the Go/No-Go list of [MIL-006] |
 
 ## Risks
 
@@ -129,6 +135,8 @@ The project supports the participant's goal of finishing the bootcamp with repos
 | The adopted files drift away from [021-snake-game] | A fix made in one repository is missing in the other | Out of scope by decision; each pull request lists the differences from the base |
 | Tokens in `.env` leak into the repository | Credentials exposed | `.env` is in `.gitignore`, is never imported, and is not part of any task |
 | The wiki is published with a secret of the organization that may be missing | The wiki stays empty | The pages are files in `wiki/` of the pull request; the marker `wiki/.publish` makes the instance's workflow publish them; a missing secret is reported, not worked around |
+| The screenshot is a capture of a real window, which needs a display and the operating system's window capture | It cannot be repeated in CI or on another machine | It is taken once on S01's machine and committed as a file; the pull request says how it was taken and that the food was placed to reach the score quickly; a capture tool is out of scope |
+| The screenshot goes out of date when the look changes | The README and the wiki show a look that the game no longer has | The wiki refers to the file on `main`, so a new screenshot replaces it in all places; a change of the look has its own milestone that retakes it |
 
 ## Assumptions
 
@@ -139,6 +147,7 @@ The project supports the participant's goal of finishing the bootcamp with repos
 - The finished `main` of [021-snake-game] is correct as far as its own tests and review records show, and is the base for every file that the milestones adopt; S01 pointed to it in chat on 2026-10-13.
 - The look of the snake (light green body, dark green head with a mouth) of [021-snake-game] is kept.
 - The wiki of the repository is enabled and has no page yet.
+- The screenshot is of the finished game as it runs on S01's Windows machine; S01 accepts the plan that adds it by chat, which also confirms the score of 5 and a high score on the scoreboard as its content.
 
 ## Constraints
 
@@ -156,7 +165,7 @@ The assessment is qualitative on purpose: this is an unpaid learning project wit
 
 | Costs | Benefits |
 | --- | --- |
-| About ten days of S01's spare time, most of it review of the planning documents | A finished and shareable repository (objectives 1 to 12) |
+| About ten days of S01's spare time, most of it review of the planning documents, and two more days for the screenshot | A finished and shareable repository (objectives 1 to 13) |
 | Two repositories that hold similar code and can drift apart | No rebuild of a game that already exists and is tested |
 | Doxygen and pytest as development tools (not runtime) | Source documentation and automatic checks |
 
@@ -164,9 +173,9 @@ The assessment is qualitative on purpose: this is an unpaid learning project wit
 
 | Stakeholder ID (SA) | Interest in this project |
 | --- | --- |
-| S01 | Wants a correct, tested and documented solution of the assignment: objectives 1 to 12 |
+| S01 | Wants a correct, tested and documented solution of the assignment: objectives 1 to 13 |
 | S02 | Needs readable, runnable code with the assignment's names and README instructions (objectives 2 to 4, 7, 8 and 10) |
-| S03 | Needs a clear repository page and nothing to install (objectives 8, 10 and 12) |
+| S03 | Needs a clear repository page and nothing to install (objectives 8, 10, 12 and 13) |
 
 ## Recommendation
 
@@ -180,6 +189,8 @@ Proceed — the work is small (adopt a finished and tested base, add the high sc
 [MIL-002]: ./milestones/mil-002-adopt-the-game.md
 [MIL-003]: ./milestones/mil-003-continuous-play-and-high-score.md
 [MIL-004]: ./milestones/mil-004-high-score-file.md
+[MIL-006]: ./milestones/mil-006-screenshot.md
 [020-snake-game]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game
 [021-snake-game]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/021-snake-game
 [e004c34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/e004c34565839b38dc1e06c8a05baaa66ce9eb1d
+[988ebba]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/024-snake/commit/988ebba060c1ec69728a7fa36b24bc70737096d8
