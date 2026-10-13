@@ -10,8 +10,7 @@ module first.
 from turtle import Turtle
 
 from snake_game.constants import (
-    GAME_OVER_POSITION,
-    GAME_OVER_TEXT,
+    HIGH_SCORE_LABEL,
     SCORE_LABEL,
     SCOREBOARD_ALIGNMENT,
     SCOREBOARD_COLOR,
@@ -26,8 +25,10 @@ class Scoreboard(Turtle):
     def __init__(self) -> None:
         """! @brief Set the scoreboard up and write the score 0."""
         super().__init__()
-        ## @brief The number of foods the snake has eaten in this game.
+        ## @brief The number of foods the snake has eaten since the last reset.
         self.score = 0
+        ## @brief The largest score reached so far.
+        self.high_score = 0
         self.color(SCOREBOARD_COLOR)
         self.penup()
         self.hideturtle()
@@ -35,10 +36,10 @@ class Scoreboard(Turtle):
         self.update_scoreboard()
 
     def update_scoreboard(self) -> None:
-        """! @brief Wipe the old text and write the label and the score."""
+        """! @brief Wipe the old text and write the score and the high score."""
         self.clear()
         self.write(
-            f"{SCORE_LABEL}{self.score}",
+            f"{SCORE_LABEL}{self.score} {HIGH_SCORE_LABEL}{self.high_score}",
             align=SCOREBOARD_ALIGNMENT,
             font=SCOREBOARD_FONT,
         )
@@ -48,11 +49,13 @@ class Scoreboard(Turtle):
         self.score += 1
         self.update_scoreboard()
 
-    def game_over(self) -> None:
-        """! @brief Write the game-over text at the centre of the screen.
+    def reset(self) -> None:
+        """! @brief Keep the best score, start a new game and write the scoreboard.
 
-        The score stays where it is: the old text is not wiped. Automatic drawing is
-        off in the game, so the screen must be updated after this call.
+        When the score is higher than the high score, it becomes the new high
+        score. The score then goes back to 0.
         """
-        self.goto(GAME_OVER_POSITION)
-        self.write(GAME_OVER_TEXT, align=SCOREBOARD_ALIGNMENT, font=SCOREBOARD_FONT)
+        if self.score > self.high_score:
+            self.high_score = self.score
+        self.score = 0
+        self.update_scoreboard()
