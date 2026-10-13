@@ -20,10 +20,10 @@ from snake_game.main import (
     bind_keys,
     configure_screen,
     eat_food_if_close,
-    end_game_if_over,
     main,
     play_frame,
     register_head_shape,
+    reset_if_collision,
 )
 from snake_game.snake import Snake
 
@@ -276,7 +276,7 @@ def test_main_lets_the_snake_eat_the_food_that_lies_on_its_way(
         ("goto", (20, 0)),
         ("goto", (constants.WALL_LIMIT, constants.WALL_LIMIT)),
     ]
-    assert scoreboard.calls[-1][1][0] == "Score: 1"
+    assert scoreboard.calls[-1][1][0] == "Score: 1 High Score: 0"
     assert new_segment.position() == (-20, 0)  # where the last segment was
 
 
@@ -288,86 +288,93 @@ def test_main_does_not_raise_the_score_when_the_food_is_far_away(
     main()
 
     scoreboard = turtles[4]
-    assert scoreboard.calls[-1][1][0] == "Score: 0"
+    assert scoreboard.calls[-1][1][0] == "Score: 0 High Score: 0"
     assert len(turtles) == len(constants.STARTING_POSITIONS) + 2
 
 
-def test_the_game_is_not_over_while_the_snake_is_inside_and_clear_of_its_tail() -> None:
-    snake, _ = make_snake()
+def test_nothing_is_reset_while_the_snake_is_inside_and_clear_of_its_tail() -> None:
+    snake, created = make_snake()
     scoreboard = FakeScoreboard()
 
-    assert not end_game_if_over(snake, scoreboard)
-    assert scoreboard.game_overs == 0
+    assert not reset_if_collision(snake, scoreboard)
+    assert scoreboard.resets == 0
+    assert len(created) == len(constants.STARTING_POSITIONS)
 
 
-def test_the_game_is_over_when_the_head_passes_the_wall() -> None:
-    snake, _ = make_snake()
+def test_the_game_is_reset_when_the_head_passes_the_wall() -> None:
+    snake, created = make_snake()
     snake.head.goto(constants.WALL_LIMIT + 1, 0)
     scoreboard = FakeScoreboard()
 
-    assert end_game_if_over(snake, scoreboard)
-    assert scoreboard.game_overs == 1
+    assert reset_if_collision(snake, scoreboard)
+    assert scoreboard.resets == 1
+    assert len(created) == 2 * len(constants.STARTING_POSITIONS)
 
 
-def test_the_game_is_over_when_the_head_touches_the_tail() -> None:
+def test_the_game_is_reset_when_the_head_touches_the_tail() -> None:
     snake, created = make_snake()
     created[1].goto(3, 4)
     scoreboard = FakeScoreboard()
 
-    assert end_game_if_over(snake, scoreboard)
-    assert scoreboard.game_overs == 1
+    assert reset_if_collision(snake, scoreboard)
+    assert scoreboard.resets == 1
+    assert snake.head is not created[0]
 
 
-def test_main_ends_the_game_at_the_wall_shows_game_over_and_waits_for_a_click(
+def test_main_goes_on_after_the_wall_with_a_new_snake_and_no_game_over(
     monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
 ) -> None:
-    turtles, screens = install_fake_turtle(monkeypatch, frames_before_close=100)
+    moves_to_pass_the_wall = constants.WALL_LIMIT // constants.MOVE_DISTANCE + 1
+    turtles, screens = install_fake_turtle(
+        monkeypatch, frames_before_close=moves_to_pass_the_wall + 2
+    )
 
     main()
 
-    snake_head, scoreboard = turtles[0], turtles[4]
-    moves_to_pass_the_wall = constants.WALL_LIMIT // constants.MOVE_DISTANCE + 1
-    assert snake_head.call_names().count("forward") == moves_to_pass_the_wall
-    assert snake_head.position() == (
-        constants.MOVE_DISTANCE * moves_to_pass_the_wall,
-        0,
-    )
+    old_head, scoreboard = turtles[0], turtles[4]
+    new_head = turtles[5]
+    written = [call[1][0] for call in scoreboard.calls if call[0] == "write"]
+    assert old_head.position() == constants.SEGMENT_PARKING_POSITION
+    assert new_head.call_names().count("forward") == 2
+    assert new_head.position() == (2 * constants.MOVE_DISTANCE, 0)
     assert scoreboard.calls[-1] == (
         "write",
-        ("GAME OVER", "center", ("Arial", 24, "normal")),
+        ("Score: 0 High Score: 0", "center", ("Arial", 24, "normal")),
     )
-    assert screens[0].call_names()[-2:] == ["update", "exitonclick"]
-    assert screens[0].call_names().count("exitonclick") == 1
-    assert sleeps == [constants.REFRESH_DELAY_SECONDS] * moves_to_pass_the_wall
+    assert "GAME OVER" not in written
+    assert "exitonclick" not in screens[0].call_names()
 
 
-def test_main_ends_the_game_when_the_snake_touches_its_tail(
+def test_main_shows_the_best_score_after_a_reset(
+    monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
+) -> None:
+    script_randint(monkeypatch, [20, 0])  # the first food lies one move ahead
+    moves_to_pass_the_wall = constants.WALL_LIMIT // constants.MOVE_DISTANCE + 1
+    turtles, _ = install_fake_turtle(
+        monkeypatch, frames_before_close=moves_to_pass_the_wall
+    )
+
+    main()
+
+    scoreboard = turtles[4]
+    assert scoreboard.calls[-1][1][0] == "Score: 0 High Score: 1"
+
+
+def test_main_resets_when_the_snake_touches_its_tail(
     monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
 ) -> None:
     monkeypatch.setattr("snake_game.snake.Snake.hits_tail", lambda self: True)
-    turtles, screens = install_fake_turtle(monkeypatch, frames_before_close=100)
+    turtles, screens = install_fake_turtle(monkeypatch, frames_before_close=2)
 
     main()
 
     assert turtles[0].call_names().count("forward") == 1
-    assert turtles[4].calls[-1][1][0] == "GAME OVER"
-    assert screens[0].call_names()[-1] == "exitonclick"
-
-
-def test_main_does_not_move_the_snake_after_game_over(
-    monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
-) -> None:
-    turtles, screens = install_fake_turtle(monkeypatch, frames_before_close=100)
-
-    main()
-
-    updates = screens[0].call_names().count("update")
-    moves = turtles[0].call_names().count("forward")
-    assert updates == moves + 1  # one update per frame, and one for the last text
+    assert turtles[0].position() == constants.SEGMENT_PARKING_POSITION
+    assert "exitonclick" not in screens[0].call_names()
 
 
 @pytest.mark.parametrize("closing_error", [FakeTerminatorError, FakeTclError])
-def test_main_ends_quietly_when_the_window_is_closed_after_game_over(
+def test_main_ends_quietly_when_the_window_is_closed_after_a_reset(
     monkeypatch: pytest.MonkeyPatch,
     sleeps: list[float],
     closing_error: type[Exception],
@@ -381,7 +388,7 @@ def test_main_ends_quietly_when_the_window_is_closed_after_game_over(
 
     main()
 
-    assert turtles[4].calls[-1][1][0] == "GAME OVER"
+    assert turtles[4].calls[-1][1][0] == "Score: 0 High Score: 0"
     assert "exitonclick" not in screens[0].call_names()
 
 

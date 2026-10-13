@@ -3,8 +3,8 @@
 
 The flow follows the lectures "Screen Setup and Creating a Snake Body",
 "Animating the Snake Segments on Screen" and "Controlling the Snake with
-Keypresses", and the day-21 steps in which the snake eats food, the score rises and
-the game ends.
+Keypresses", the day-21 steps in which the snake eats food and the score rises,
+and the day-24 steps in which a collision resets the game and it goes on.
 """
 
 import time
@@ -102,7 +102,7 @@ class FoodLike(Protocol):
 
 
 class ScoreboardLike(Protocol):
-    """! @brief What the eating and game-over checks need from the scoreboard.
+    """! @brief What the eating and reset checks need from the scoreboard.
 
     A `Scoreboard` fits this description, and so does a fake in a test.
     """
@@ -111,8 +111,8 @@ class ScoreboardLike(Protocol):
         """! @brief Add 1 to the score and write it."""
         ...
 
-    def game_over(self) -> None:
-        """! @brief Write the game-over text."""
+    def reset(self) -> None:
+        """! @brief Keep the best score and start the score again at 0."""
         ...
 
 
@@ -190,17 +190,19 @@ def eat_food_if_close(snake: Snake, food: FoodLike, scoreboard: ScoreboardLike) 
         scoreboard.increase_score()
 
 
-def end_game_if_over(snake: Snake, scoreboard: ScoreboardLike) -> bool:
-    """! @brief End the game when the head passes the wall or touches the tail.
+def reset_if_collision(snake: Snake, scoreboard: ScoreboardLike) -> bool:
+    """! @brief Start again when the head passes the wall or touches the tail.
 
-    When the game is over the scoreboard writes the game-over text.
+    The game does not end: the scoreboard keeps the best score and starts the
+    score again, and the snake is made again at the starting positions.
 
     @param snake The snake.
-    @param scoreboard The scoreboard that writes the game-over text.
-    @return True when the game is over.
+    @param scoreboard The scoreboard that keeps the high score.
+    @return True when the snake and the score were reset.
     """
     if snake.hits_wall() or snake.hits_tail():
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.reset()
         return True
     return False
 
@@ -212,9 +214,8 @@ def main() -> None:
     `tkinter.TclError` ("invalid command name"), and `turtle` raises
     `turtle.Terminator` in some other calls once its window is gone. Both mean
     "the player closed the window", so the game ends quietly with exit code 0.
-    When the snake passes the wall or touches its tail the loop ends, the screen is
-    updated so that the game-over text shows, and `screen.exitonclick()` waits for a
-    click.
+    When the snake passes the wall or touches its tail the score and the snake are
+    reset and the game goes on, so the loop runs until the window is closed.
 
     `turtle` and `tkinter` are imported here and not at the top of the module, and
     so are `food` and `scoreboard`, whose classes inherit from `Turtle`: importing
@@ -240,9 +241,6 @@ def main() -> None:
         while game_is_on:
             play_frame(screen, snake)
             eat_food_if_close(snake, food, scoreboard)
-            if end_game_if_over(snake, scoreboard):
-                game_is_on = False
-        screen.update()
-        screen.exitonclick()
+            reset_if_collision(snake, scoreboard)
     except (Terminator, TclError):
         return  # the window was closed: there is nothing left to do

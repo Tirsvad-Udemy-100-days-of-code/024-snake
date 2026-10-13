@@ -138,13 +138,13 @@ class FakeScoreboard:
 
     def __init__(self) -> None:
         self.increases = 0
-        self.game_overs = 0
+        self.resets = 0
 
     def increase_score(self) -> None:
         self.increases += 1
 
-    def game_over(self) -> None:
-        self.game_overs += 1
+    def reset(self) -> None:
+        self.resets += 1
 
 
 class FakeScreen:
